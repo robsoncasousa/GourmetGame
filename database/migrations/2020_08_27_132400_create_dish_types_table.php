@@ -16,7 +16,6 @@ class CreateDishTypesTable extends Migration
     {
         Schema::create('dish_types', function (Blueprint $table) {
             $table->increments('id');
-            $table->enum('equivalent', [0, 1]);
             $table->integer('type_id')->unsigned();
             $table->integer('dish_id')->unsigned();
             $table->timestamp('created_at')->useCurrent();

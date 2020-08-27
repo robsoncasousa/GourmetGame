@@ -10904,3 +10904,7 @@ a.text-dark:focus {
   }
 }
 
+body {
+  font-size: 15px !important;
+}
+

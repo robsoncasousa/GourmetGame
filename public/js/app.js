@@ -1926,31 +1926,106 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      polls: [],
-      newPoll: [],
-      newFormPoll: false
+      message: 'Pense em um prato!',
+      typeId: '',
+      dishId: '',
+      dishName: '',
+      gameResult: '',
+      qtyPlayed: '',
+      newDish: '',
+      difference: '',
+      finished: ''
     };
   },
   methods: {
+    restart: function restart() {
+      this.message = 'Pense em um prato!';
+      this.typeId = '';
+      this.dishId = '';
+      this.dishName = '';
+      this.gameResult = '';
+      this.qtyPlayed = '';
+      this.newDish = '';
+      this.difference = '';
+      this.finished = '';
+    },
     startGame: function startGame() {
       var _this = this;
 
       axios.get('/api/v1/game').then(function (response) {
-        _this.question = response.question;
+        _this.message = response.data.message;
+        _this.typeId = response.data.typeId;
       });
     },
-    showFormPoll: function showFormPoll() {
-      if (!this.newFormPoll) {
-        this.newFormPoll = true;
-      }
+    sendAnswer: function sendAnswer($answer) {
+      var _this2 = this;
+
+      axios.post('/api/v1/game', {
+        'type_id': this.typeId,
+        'dish_id': this.dishId,
+        'answer': $answer
+      }).then(function (response) {
+        if (response.data.gameResult) {
+          _this2.gameResult = response.data.gameResult;
+          _this2.dishName = response.data.dishName;
+          _this2.qtyPlayed = response.data.qtyPlayed;
+
+          if (response.data.gameResult == 'win') {
+            _this2.message = 'Ebaaa \\o/';
+          } else {
+            _this2.message = 'Você venceu!';
+          }
+        } else {
+          _this2.message = response.data.message;
+          _this2.typeId = response.data.typeId;
+          _this2.dishId = response.data.dishId;
+        }
+      });
     },
-    hideFormPoll: function hideFormPoll() {
-      if (this.newFormPoll) {
-        this.newFormPoll = false;
-      }
+    saveNewDish: function saveNewDish() {
+      var _this3 = this;
+
+      axios.post('/api/v1/game/newdish', {
+        'new_dish': this.newDish,
+        'difference': this.difference
+      }).then(function (response) {
+        _this3.gameResult = '';
+        _this3.finished = response.data.finished;
+      });
     }
   }
 });
@@ -37546,29 +37621,205 @@ var render = function() {
       "div",
       {
         staticClass:
-          "container col-12 col-sm-6 col-md-4 col-lg-3 justify-content-center"
+          "container col-12 col-sm-12 col-md-6 col-lg-5 justify-content-center"
       },
       [
         _c("div", { staticClass: "card" }, [
           _c("div", { staticClass: "card-header" }, [
-            _vm._v("Pense em um prato")
+            _vm._v(_vm._s(_vm.message))
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "card-body" }, [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-success ml-2",
-                attrs: { type: "button" },
-                on: {
-                  click: function($event) {
-                    return _vm.startGame()
-                  }
-                }
-              },
-              [_vm._v("Iniciar")]
-            )
-          ])
+          _vm.gameResult == "" && _vm.finished == ""
+            ? _c("div", { staticClass: "card-body" }, [
+                _vm.typeId == "" && _vm.dishId == ""
+                  ? _c(
+                      "div",
+                      { staticClass: "d-flex flex-row justify-content-center" },
+                      [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-success ml-2",
+                            attrs: { type: "button" },
+                            on: {
+                              click: function($event) {
+                                return _vm.startGame()
+                              }
+                            }
+                          },
+                          [_vm._v("Iniciar")]
+                        )
+                      ]
+                    )
+                  : _c(
+                      "div",
+                      { staticClass: "d-flex flex-row justify-content-center" },
+                      [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-success ml-2",
+                            attrs: { type: "button" },
+                            on: {
+                              click: function($event) {
+                                return _vm.sendAnswer("yes")
+                              }
+                            }
+                          },
+                          [_vm._v("Sim")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-primary ml-2",
+                            attrs: { type: "button" },
+                            on: {
+                              click: function($event) {
+                                return _vm.sendAnswer("no")
+                              }
+                            }
+                          },
+                          [_vm._v("Não")]
+                        )
+                      ]
+                    )
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.gameResult == "win"
+            ? _c("div", { staticClass: "card-body" }, [
+                _c("div", [_vm._v("Acertei de Novo!")]),
+                _vm._v(" "),
+                _c("div", [
+                  _vm._v(
+                    _vm._s(_vm.dishName) +
+                      " foi jogado " +
+                      _vm._s(_vm.qtyPlayed) +
+                      " " +
+                      _vm._s(_vm.qtyPlayed > 1 ? "vezes" : "vez") +
+                      "!"
+                  )
+                ]),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary ml-2 mt-3",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        return _vm.restart()
+                      }
+                    }
+                  },
+                  [_vm._v("Reiniciar")]
+                )
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.gameResult == "lose"
+            ? _c("div", { staticClass: "card-body" }, [
+                _c("div", [_vm._v("Desisto!")]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", { attrs: { for: "newdish" } }, [
+                    _vm._v("Qual prato você pensou?")
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.newDish,
+                        expression: "newDish"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "text", id: "newdish" },
+                    domProps: { value: _vm.newDish },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.newDish = $event.target.value
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _vm.newDish != ""
+                  ? _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "newType" } }, [
+                        _vm._v(
+                          _vm._s(_vm.newDish) +
+                            " é _________________ mas " +
+                            _vm._s(_vm.dishName) +
+                            " não."
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.difference,
+                            expression: "difference"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { type: "text", id: "newType" },
+                        domProps: { value: _vm.difference },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.difference = $event.target.value
+                          }
+                        }
+                      })
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary ml-2",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        return _vm.saveNewDish()
+                      }
+                    }
+                  },
+                  [_vm._v("Enviar")]
+                )
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.finished == "yes"
+            ? _c("div", { staticClass: "card-body" }, [
+                _c("div", [_vm._v("Obrigado por contribuir!")]),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary ml-2",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        return _vm.restart()
+                      }
+                    }
+                  },
+                  [_vm._v("Reiniciar")]
+                )
+              ])
+            : _vm._e()
         ])
       ]
     )
