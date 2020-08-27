@@ -1,0 +1,39 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
+
+class CreateDishTypesTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('dish_types', function (Blueprint $table) {
+            $table->increments('id');
+            $table->enum('equivalent', [0, 1]);
+            $table->integer('type_id')->unsigned();
+            $table->integer('dish_id')->unsigned();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
+            
+            $table->foreign('type_id')->references('id')->on('types');
+            $table->foreign('dish_id')->references('id')->on('dishes');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('dish_types');
+    }
+}
