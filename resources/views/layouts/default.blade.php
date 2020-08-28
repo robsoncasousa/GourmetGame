@@ -12,27 +12,33 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="A Laravel Restful API and VueJS project to guess the dish you are thinking. This systema learning new dishes with the use."/>
     </head>
-    <body>  
-        <div id="app">
-        @yield('content')
+    <body>
+        <div class="container my-4">
+            <h1 class="h3 mr-auto"><a href="/">Gourmet Game</a></h1>
+            <h2 class="h5">Olá, seja bem-vindo ao Gourmet Game. Pense em um prato. Eu vou tentar adivinhar qual é!</h2>
+            <p>Caso eu não consiga, sou humilde e aprendo com as minhas derrotas!</p>
+        </div>
 
-        <nav class="nav-footer-content navbar navbar-light bg-white justify-content-center mt-4">
-            <div class="">
-                Gourmet Game
+        <div id="app" class="mt-4">
+            @yield('content')
+
+            <nav class="nav-footer-content navbar navbar-light bg-white justify-content-center mt-4">
+                <div class="">
+                    Gourmet Game
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    Copyright © {{ date('Y') }}</div>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                Copyright © {{ date('Y') }}</div>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        </nav>
-      </div>
+            </nav>
+        </div>
 
-    <noscript id="deferred-styles">
-        <!-- Styles -->
-        @if (config('app.env') == 'local')
-            <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-        @else
-            <link href="{{asset(mix('css/app.css'), true)}}" rel="stylesheet">
-        @endif
-    </noscript>
+        <noscript id="deferred-styles">
+            <!-- Styles -->
+            @if (config('app.env') == 'local')
+                <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+            @else
+                <link href="{{asset(mix('css/app.css'), true)}}" rel="stylesheet">
+            @endif
+        </noscript>
         <script>
             var loadDeferredStyles = function() {
                 var addStylesNode = document.getElementById("deferred-styles");

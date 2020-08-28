@@ -1,13 +1,8 @@
 <template>
     <div>
-        <div class="container my-4 d-flex flex-row">
-            <h1 class="h3 mr-auto">Gourmet Game</h1>
-        </div>
-
         <div class="container col-12 col-sm-12 col-md-6 col-lg-5 justify-content-center">
             <div  class="card">
                 <div class="card-header">{{ message }}</div>
-
                 <div v-if="gameResult == '' && finished == ''" class="card-body">
                     <div v-if="typeId == '' && dishId == ''" class="d-flex flex-row justify-content-center">
                         <button v-on:click="startGame()" class="btn btn-success ml-2" type="button">Iniciar</button>

@@ -54,6 +54,9 @@ class GameController extends Controller
         } else {
             $dishModel = new Dish();
             $dishGuess = $dishModel->getGuess($typeIdsYes, $typeIdsNo);
+            if(!$dishGuess)
+                $dishGuess = $dishModel->first();
+
             return $this->composeGuess($dishGuess);
         }
     }
