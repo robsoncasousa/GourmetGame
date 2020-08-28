@@ -1,7 +1,7 @@
 ## Introduction
-A Laravel Restful API and VueJS project to guess the dish you are thinking. This systema learning new dishes with the use.
+A Laravel Restful API and VueJS project to guess the dish you are thinking. This system learning new dishes with the use.
 
-This system has theses features:
+This system has these features:
 - To ask the characteristcs of the dish
 - To learn with the use
 - To count how many times a dish was played
