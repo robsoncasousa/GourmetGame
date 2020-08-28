@@ -12,8 +12,17 @@ class TypeSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('types')->insert([
-            'name' => 'Massa',
-        ]);
+        DB::table('types')->insert(
+            [
+                [
+                    'id' => 1,
+                    'name' => 'Massa',
+                ],
+                [
+                    'id' => 2,
+                    'name' => 'Doce',
+                ]
+            ]
+        );
     }
 }

@@ -12,7 +12,6 @@ class GameController extends Controller
 {
     public function startGame()
     {
-        session()->flush();
         session()->put('typeIdsYes', []);
         session()->put('typeIdsNo', []);
 

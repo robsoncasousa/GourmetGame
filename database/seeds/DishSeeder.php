@@ -12,8 +12,17 @@ class DishSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('dishes')->insert([
-            'name' => 'Lasanha',
-        ]);
+        DB::table('dishes')->insert(
+            [
+                [
+                    'id' => 1,
+                    'name' => 'Lasanha',
+                ],
+                [
+                    'id' => 2,
+                    'name' => 'Bolo de chocolate',
+                ]
+            ]
+        );
     }
 }
