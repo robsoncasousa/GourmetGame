@@ -127,23 +127,21 @@ class GameController extends Controller
         $dishModel = new Dish();
         $dish = $dishModel->findOrFail($dishId);
         $dish->increment('qty_played');
+        $gameResult = '';
 
         if ($answer == 'yes') {
             $dish->increment('victories');
-            return [
-                'gameResult' => 'win',
-                'dishName' => $dish->name,
-                'qtyPlayed' => $dish->qty_played,
-                'answered' => session('typeIdsYes', [])
-            ];
+            $gameResult = 'win';
         } else {
             $dish->increment('defeats');
-            return [
-                'gameResult' => 'lose',
-                'dishName' => $dish->name,
-                'qtyPlayed' => $dish->qty_played,
-                'answered' => session('typeIdsYes', [])
-            ];
+            $gameResult = 'lose';
         }
+
+        return [
+            'gameResult' => $gameResult,
+            'dishName' => $dish->name,
+            'qtyPlayed' => $dish->qty_played,
+            'answered' => session('typeIdsYes', [])
+        ];
     }
 }
